@@ -15,6 +15,11 @@ describe 'UsersController', type: :request do
     it 'returns HTTP success' do
       expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body).size).to eq 10
+      puts (JSON.parse(response.body)[0]['name'])
+      expect(JSON.parse(response.body)[0]['name']).to be_truthy
+      expect(JSON.parse(response.body)[0]['status']).to eq 'active'
+      expect(JSON.parse(response.body)[0]['kind']).to eq 'manager'
+      expect(JSON.parse(response.body)[0]['name']).to be_truthy
     end
 
   end
