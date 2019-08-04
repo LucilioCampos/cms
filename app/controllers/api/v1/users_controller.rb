@@ -13,8 +13,8 @@ module Api
       end
 
       def show
-        user = User.find(params[:id])
-        render json: user, status: 200
+        @user = User.find(params[:id])
+        render json: @user, status: 200
       end
 
       def new
@@ -49,50 +49,7 @@ module Api
 
       private
         def user_params
-          params.permit(:name, :status, :kind, :notes, phones_attributes: [:id, :kind, :user, :client, :num])
-        end
-
-        def list_phones(phones)
-          list = {}
-          options = []
-          if phones.any?
-            phones.map do |phone|
-              list = {
-                id: phone.id,
-                tipo: phone.kind,
-                numero: phone.num
-              }
-              options.append(list)
-            end
-          else
-            options =  "Não possui"
-          end
-          return options
-        end
-
-        def list_users
-          @users = User.order('created_at DESC').where(status: :active)
-          options = []
-          usuarios = {}
-          @users.each do |user|
-            usuarios = {
-              nome: user.name,
-              status: user.status,
-              perfil: user.kind,
-              observacoes: user.notes,
-              telefones: list_phones(user.phones)
-            }
-            options.append(usuarios)
-          end
-          return options
-        end
-
-        def show_user
-          @user = User.find(params[id])
-        end
-
-        def list_filter
-          @users = User.where(user_params)
+          params(:user).permit(:name, :status, :kind, :notes, phones_attributes: [:id, :kind, :user, :client, :num])
         end
 
     end

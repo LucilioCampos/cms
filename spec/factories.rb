@@ -8,5 +8,10 @@ FactoryBot.define do
     kind { 'manager' }
     notes { Faker::Lorem.sentence(10) }
   end
+
+  factory :random_kinds, class: Kind do
+    name { Faker::Name.name }
+    description { Faker::Lorem.sentence(2)}
+  end
 end
 

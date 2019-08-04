@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'UsersController', type: :request do
-  let!(:users) { FactoryBot.create_list(:random_users, 10)}
+  let!(:users) { FactoryBot.create_list(:random_users, 10) }
   before :all do
     @base_url = '/api/v1/users'
   end
@@ -32,7 +32,7 @@ describe 'UsersController', type: :request do
 
     it 'returns HTTP success' do
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).size).to eq 7
+      expect(JSON.parse(response.body).size).to eq 6
     end
   end
 
