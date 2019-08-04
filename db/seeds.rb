@@ -6,19 +6,43 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
+puts 'Criando os Tipos'
 10.times do
   kind = Kind.create(
     name: Faker::Name.name,
     description: Faker::Lorem.sentence(4)
   )
 end
+puts 'Tipos Criados!'
 
+puts 'Criando usuários'
 10.times do
   user = User.create(
     name: Faker::Name.name,
     status: :active,
     kind: :manager,
-    notes: Faker::Lorem.sentence(10)
+    notes: Faker::Lorem.sentence(10),
+    phones: [Phone.create(
+      kind: :fix,
+      num: Faker::PhoneNumber.phone_number
+    )]
   )
 end
+puts 'Usuários criados!!'
+
+puts 'Criando Clientes'
+10.times do
+  client = Client.create(
+    name: Faker::Name.name,
+    company: Faker::Company.name,
+    email: Faker::Internet.email,
+    user: User.all.sample,
+    notes: Faker::Lorem.sentence(5),
+    status: :active,
+    phones: [Phone.create(
+      kind: :fix,
+      num: Faker::PhoneNumber.phone_number
+    )]
+  )
+end
+puts 'Clientes Criados'

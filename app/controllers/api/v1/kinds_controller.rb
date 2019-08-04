@@ -9,15 +9,24 @@ module Api
 
       def show
         kind = Kind.find(params[:id])
-        render json: kind
+        if kind.valid?
+          render json: kind
+        else
+          render json: { status: 404 }
+        end
+      end
+
+      def new
+        @kind = Kind.new
       end
 
       def create
-				kind = Kind.new(kind_params)
-				if kind.save
-					render json: { status: 'SUCCESS', message:'Tipo salvo', tipo: kind }, status: :ok
+        @kind = Kind.create(kind_params)
+        puts kind_params
+				if @kind.save
+					render json: @kind, status: 201
 				else
-					render json: { status: 'ERROR', message:'Tipo não salvo', tipo: kind.erros }, status: :unprocessable_entity
+					render json: @kind.errors, status: :unprocessable_entity
 				end
       end
 
@@ -26,14 +35,14 @@ module Api
 				if kind.update_attributes(kind_params)
 					render json: kind, status: 201
 				else
-					render json: { status: 'ERROR', message:'kind not update', tipo: kind.erros }, status: :unprocessable_entity
+					render json: { status: 'ERROR', message:'kind not update', tipo: kind.errors }, status: :unprocessable_entity
 				end
 			end
 
       def destroy
-        kind = Kind.find(params[:id])
-        kind.destroy
-        render json: { status: 'SUCCESS', message: 'Destroyed', tipo: kind }, status: :ok
+        @kind = Kind.find(params[:id])
+        @kind.destroy
+        render json: @kind, status: 204
       end
       
 

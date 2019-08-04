@@ -22,5 +22,4 @@ class UserSerializer < ActiveModel::Serializer
     end
   end
 
-  has_many :phones, include_nested_associations: true
 end

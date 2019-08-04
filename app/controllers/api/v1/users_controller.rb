@@ -25,7 +25,7 @@ module Api
       def create
         @user = User.create(user_params)
         if @user.save
-          render json: { data: @user }, status: 202
+          render json: @user, status: 201
         else
           render json: { data: @user.errors }, status: :unprocessable_entity
         end
@@ -49,7 +49,7 @@ module Api
 
       private
         def user_params
-          params(:user).permit(:name, :status, :kind, :notes, phones_attributes: [:id, :kind, :user, :client, :num])
+          params.permit(:name, :status, :kind, :notes, phones_attributes: [:id, :kind, :user, :client, :num])
         end
 
     end

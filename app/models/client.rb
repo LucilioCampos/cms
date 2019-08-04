@@ -3,4 +3,12 @@ class Client < ApplicationRecord
   enum status: [:active, :inactive]
   has_many :phones
   has_many :addresses
+
+  before_save do
+    if self.phones.select(&:user_id).any?
+      raise 'Esse telefone já pertence a outro usuário!'
+    end
+  end
+
+  accepts_nested_attributes_for :phones, :addresses
 end

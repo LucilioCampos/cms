@@ -11,6 +11,12 @@ class User < ApplicationRecord
   scope :search_name, -> (name) { where("name like ?", "#{name}%")}
   scope :campos, -> (filter) { select(filter) }
 
+  before_save do
+    if self.phones.select(&:client_id).any?
+      raise 'Esse telefone já pertence a outro usuário!'
+    end
+  end
+
   accepts_nested_attributes_for :phones, allow_destroy: true
 
 end
