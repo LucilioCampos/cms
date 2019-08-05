@@ -22,7 +22,6 @@ module Api
 
       def create
         @kind = Kind.create(kind_params)
-        puts kind_params
 				if @kind.save
 					render json: @kind, status: 201
 				else

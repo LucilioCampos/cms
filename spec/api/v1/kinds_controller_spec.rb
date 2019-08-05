@@ -17,8 +17,8 @@ describe 'KindsController', type: :request do
       expect(JSON.parse(response.body).size).to eq 10
       puts JSON.parse(response.body)[0]
       expect(JSON.parse(response.body)[0]['id']).to be_truthy
-      expect(JSON.parse(response.body)[0]['nome']).to be_truthy
-      expect(JSON.parse(response.body)[0]['descricao']).to be_truthy
+      expect(JSON.parse(response.body)[0]['name']).to be_truthy
+      expect(JSON.parse(response.body)[0]['description']).to be_truthy
     end
   end
 
@@ -38,8 +38,7 @@ describe 'KindsController', type: :request do
   context 'POST /api/v1/kinds', type: :request do
 
     before :all do
-      @new_kind = { nome: 'Testing', descricao: 'Testing'}
-      post "#{@base_url}", params: @new_kind
+      post "#{@base_url}", params: { name: 'Testing', description: 'Testing'}
     end
 
     it 'returns HTTP success' do
@@ -47,11 +46,11 @@ describe 'KindsController', type: :request do
     end
 
     it 'returns Kind name' do
-      expect(JSON.parse(response.body)['nome']).to eq @new_kind['nome']
+      expect(JSON.parse(response.body)['name']).to eq 'Testing'
     end
 
     it 'returns Kind description' do
-      expect(JSON.parse(response.body)['descricao']).to eq @new_kind['descricao']
+      expect(JSON.parse(response.body)['description']).to eq 'Testing'
     end
 
   end
@@ -61,8 +60,8 @@ describe 'KindsController', type: :request do
     before do
       @kind = FactoryBot.create(:random_kinds)
       put "#{@base_url}/#{@kind.id}", params: {
-        nome: @name,
-        descricao: @description
+        name: @kind.name,
+        description: @kind.description
       }
     end
 
@@ -71,11 +70,11 @@ describe 'KindsController', type: :request do
     end
 
     it 'returns Kind name' do
-      expect(JSON.parse(response.body)['nome']).to eq @kind.name
+      expect(JSON.parse(response.body)['name']).to eq @kind.name
     end
 
     it 'returns Kind description' do
-      expect(JSON.parse(response.body)['descricao']).to eq @kind.description
+      expect(JSON.parse(response.body)['description']).to eq @kind.description
     end
 
   end
@@ -91,17 +90,10 @@ describe 'KindsController', type: :request do
       expect(response).to have_http_status(204)
     end
 
-    it 'return deleted kind data' do
-      expect(JSON.parse(response.body)).to eq 3
-      expect(JSON.parse(response.body)['id']).to eq @kind.name
-      expect(JSON.parse(response.body)['nome']).to eq @kind.name
-      expect(JSON.parse(response.body)['descricao']).to eq @kind.description
-    end
-
     it 'should not return when search for user' do
-      expect(Kind.last.id).to eq @kind.id
-      expect(Kind.last.name).to eq @kind.name
-      expect(Kind.last.description).to eq @kind.description
+      expect(Kind.last.id).to_not eq @kind.id
+      expect(Kind.last.name).to_not eq @kind.name
+      expect(Kind.last.description).to_not eq @kind.description
     end
 
   end

@@ -27,29 +27,31 @@ module Api
         if @user.save
           render json: @user, status: 201
         else
-          render json: { data: @user.errors }, status: :unprocessable_entity
+          render json: @user.errors, status: :unprocessable_entity
         end
       end
 
       def update
         @user = User.find(params[:id])
-        @user.phones.build
         if @user.update_attributes(user_params)
-          render json: { data: @user }, status: 202
+          render json: @user, status: 202
         else
-          render json: { data: @user.errors }, status: :unprocessable_entity
+          render json: @user.errors, status: :unprocessable_entity
         end
       end
 
       def destroy
-        user = User.find(params[:id])
-        user.destroy
-        render json: { data: user }, status: :ok
+        @user = User.find(params[:id])
+        if @user.destroy
+          render json: { message: @user } , status: 204
+        else
+          render json: @user.errors, status: 404
+        end
       end
 
       private
         def user_params
-          params.permit(:name, :status, :kind, :notes, phones_attributes: [:id, :kind, :user, :client, :num])
+          params.permit(:name, :status, :kind, :notes, phones_attributes: [:id, :kind, :num])
         end
 
     end
