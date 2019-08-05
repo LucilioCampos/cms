@@ -13,5 +13,14 @@ FactoryBot.define do
     name { Faker::Name.name }
     description { Faker::Lorem.sentence(2)}
   end
+
+  factory :random_clients, class: Client do
+    name { Faker::Name.name }
+    company { Faker::Company.name }
+    email { Faker::Internet.email }
+    user { FactoryBot.create(:random_users) }
+    notes { Faker::Lorem.sentence(5) }
+    status { :active }
+  end
 end
 

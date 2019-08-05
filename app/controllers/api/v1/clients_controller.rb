@@ -20,7 +20,7 @@ module Api
       def update
         @client = Client.find(params[:id])
         if @client.update_attributes(client_params)
-          render json: @client, status: 201
+          render json: @client, status: 202
         else
           render @client.errors, status: :unprocessable_entity
         end
@@ -32,6 +32,15 @@ module Api
           render json: @client, status: 201
         else
           render json: @client.errors, status: :unprocessable_entity
+        end
+      end
+
+      def destroy
+        @client = Client.find(params[:id])
+        if @client.save
+          render json: { message: 'Cliente successfully removed' }, status: 204
+        else
+          render json: @client.errors
         end
       end
 
