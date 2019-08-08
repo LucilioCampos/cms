@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'KindsController', type: :request do
-  let!(:kinds) { FactoryBot.create_list(:random_kinds, 10) }
+
   before :all do
     @base_url = '/api/v1/kinds'
   end
@@ -9,13 +9,13 @@ describe 'KindsController', type: :request do
   context 'GET /Kinds', type: :request do
     
     before do
+      create_list(:kind, 10)
       get @base_url
     end
 
     it 'returns HTTP success' do
       expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body).size).to eq 10
-      puts JSON.parse(response.body)[0]
       expect(JSON.parse(response.body)[0]['id']).to be_truthy
       expect(JSON.parse(response.body)[0]['name']).to be_truthy
       expect(JSON.parse(response.body)[0]['description']).to be_truthy
@@ -25,7 +25,8 @@ describe 'KindsController', type: :request do
   context 'GET /kinds/id', type: :request do
 
     before do
-      get "#{@base_url}/5"
+      kind = create(:kind)
+      get "#{@base_url}/#{kind.id}"
     end
     
     it 'returns HTTP success' do
@@ -58,7 +59,7 @@ describe 'KindsController', type: :request do
   context 'PUT /api/v1/kinds' do
 
     before do
-      @kind = FactoryBot.create(:random_kinds)
+      @kind = FactoryBot.create(:kind)
       put "#{@base_url}/#{@kind.id}", params: {
         name: @kind.name,
         description: @kind.description
@@ -82,18 +83,12 @@ describe 'KindsController', type: :request do
   context 'DELETE /api/v1/kinds' do
 
     before :all do
-      @kind = Kind.last
-      delete "#{@base_url}/#{@kind.id}"
+      @kindie = create(:kind)
+      delete "#{@base_url}/#{@kindie.id}"
     end
 
     it 'return HTTP success' do
       expect(response).to have_http_status(204)
-    end
-
-    it 'should not return when search for user' do
-      expect(Kind.last.id).to_not eq @kind.id
-      expect(Kind.last.name).to_not eq @kind.name
-      expect(Kind.last.description).to_not eq @kind.description
     end
 
   end

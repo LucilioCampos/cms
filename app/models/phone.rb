@@ -5,4 +5,14 @@ class Phone < ApplicationRecord
 
   validates :kind, presence: true
   validates :num, presence: true
+
+  before_save do 
+
+    if self.user_id && self.client_id
+      raise "Telefone só pode pertencer a um usuário ou a um cliente"
+      self.cancel
+    end
+
+  end
+
 end

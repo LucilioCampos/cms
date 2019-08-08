@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'UsersController', type: :request do
-  let!(:users) { FactoryBot.create_list(:random_users, 10) }
+
   before :all do
     @base_url = '/api/v1/users'
   end
@@ -9,13 +9,13 @@ describe 'UsersController', type: :request do
   context 'GET /users', type: :request do
 
     before do
+      create_list(:user, 10)
       get @base_url
     end
 
     it 'returns HTTP success' do
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).size).to eq 10
-      puts (JSON.parse(response.body)[0]['name'])
+      expect(JSON.parse(response.body).size).to be > 1
       expect(JSON.parse(response.body)[0]['name']).to be_truthy
       expect(JSON.parse(response.body)[0]['status']).to eq 'active'
       expect(JSON.parse(response.body)[0]['kind']).to eq 'manager'
@@ -28,7 +28,8 @@ describe 'UsersController', type: :request do
   context 'GET /users/id' do
 
     before do
-      get "#{@base_url}/10"
+      users = create(:user)
+      get "#{@base_url}/#{users.id}"
     end
 
     it 'returns HTTP success' do
@@ -40,8 +41,8 @@ describe 'UsersController', type: :request do
   context 'GET /api/v1/users with params' do
 
     before :all do
-      @user = User.first
-      get "#{@base_url}?search_name=#{@user.name}"
+      @users = create(:user)
+      get "#{@base_url}?search_name=#{@users.name}"
     end
 
     it 'returns HTTPS success' do
@@ -49,7 +50,7 @@ describe 'UsersController', type: :request do
       expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body).size).to eq 1
       expect(JSON.parse(response.body)[0].size).to eq 6
-      expect(JSON.parse(response.body)[0]['name']).to eq @user.name
+      expect(JSON.parse(response.body)[0]['name']).to eq @users.name
     end
 
     it 'returns HTTP success without a result' do
@@ -63,62 +64,45 @@ describe 'UsersController', type: :request do
   context 'POST /api/v1/users', type: :request do
 
     before :all do
-      @user = FactoryBot.create(:random_users)
-      post "#{@base_url}", params: { 
-        name: 'Usuário Teste', 
-        status: 'active', 
-        kind: 'manager',
-        notes: 'User created to do tests',
-        phones_attributes: [{ kind: 'fix', num: '123456' }]
-      }
+      @users = create(:user)
+      post "#{@base_url}", params: @users.attributes
     end
 
     it 'returns the users name' do
-      expect(JSON.parse(response.body)['name']).to eq 'Usuário Teste'
+      expect(JSON.parse(response.body)['name']).to eq @users.name
     end
 
     it 'returns the users status' do
-      expect(JSON.parse(response.body)['status']).to eq 'active'
+      expect(JSON.parse(response.body)['status']).to eq @users.status
     end
 
     it 'returns the users kind' do
-      expect(JSON.parse(response.body)['kind']).to eq 'manager'
+      expect(JSON.parse(response.body)['kind']).to eq @users.kind
     end
 
     it 'returns the users notes' do
-      expect(JSON.parse(response.body)['notes']).to include 'to do tests'
+      expect(JSON.parse(response.body)['notes']).to eq @users.notes
     end
   end
 
   context 'PUT /api/v1/users/:id' do
     
     before :all do
-      @user = FactoryBot.create(:random_users)
-      @new_name = Faker::Name.name
-      @notes = Faker::Lorem.sentence(10)
-      post "#{@base_url}", params: {
-        name: @user.name,
-        notes: @user.notes
-      }
-    end
-
-    before :each do
-      put "#{@base_url}/#{@user.id}", params: {
-        name: @new_name, notes: @notes
-      }
+      @old_user = create(:user)
+      @new_user = build(:user)
+      put "#{@base_url}/#{@old_user.id}", params: @new_user.attributes
     end
 
     it 'returns HTTP success' do
       expect(response.status).to eq(202)
-      
     end
 
-    it 'returns the users name' do
-      expect(JSON.parse(response.body)['name']).to eq @new_name
+    it 'returns the new users name' do
+      expect(JSON.parse(response.body)['name']).to eq @new_user.name
     end
 
     it 'returns the users notes' do
-      expect(JSON.parse(response.body)['notes']).to eq @notes
+      expect(JSON.parse(response.body)['notes']).to eq @new_user.notes
     end
 
   end
@@ -126,19 +110,12 @@ describe 'UsersController', type: :request do
   context 'DELETE /api/v1/users' do
     
     before :all do
-      @user = User.all.last
-      delete "#{@base_url}/#{@user.id}"
+      @delete_user = create(:user)
+      delete "#{@base_url}/#{@delete_user.id}"
     end
 
     it 'returns HTTP success' do
       expect(response).to have_http_status(204)
-    end
-
-    it 'should not return a deleted user' do
-      last_user = User.last
-      expect(last_user.id).to_not eq @user.id
-      expect(last_user.name).to_not eq @user.name
-      expect(last_user.notes).to_not eq @user.notes
     end
 
   end
