@@ -46,3 +46,13 @@ puts 'Criando Clientes'
   )
 end
 puts 'Clientes Criados'
+
+puts 'criando Endereços'
+10.times do
+  Address.create(
+    state: Faker::Address.state_abbr,
+    city: Faker::Address.city,
+    neighborhood: Faker::Address.street_name,
+    street: Faker::Address.state_abbr
+  )
+end
