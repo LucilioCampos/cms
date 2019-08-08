@@ -1,13 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+CMS API Project
+developing.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby '2.5.5'
+
+* Rails '5.2.3'
 
 * System dependencies
+
+gem 'active_model_serializers'
+gem 'rspec'
 
 * Configuration
 
