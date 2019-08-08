@@ -37,7 +37,7 @@ module Api
 
       def destroy
         @client = Client.find(params[:id])
-        if @client.save
+        if @client.destroy
           render json: { message: 'Cliente successfully removed' }, status: 204
         else
           render json: @client.errors
@@ -49,7 +49,8 @@ module Api
 
         def client_params
           params.permit(:name, :company, :email, :user_id, :notes, :status,
-            phones_attributes: [:kind, :num]
+            phones_attributes: [:id, :kind, :num], 
+            addresses_attributes: [:id, :state, :city, :neighborhood, :street, :notes]
           )
         end
       

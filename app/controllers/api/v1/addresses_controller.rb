@@ -13,7 +13,7 @@ module Api
 
       def show
         address = Address.find(params[:id])
-        if address.any?
+        if address.present?
           render json: address, status: 200
         else
           render json: { status: "Nenhum endereço encontrado com o id #{params[:id]}" }, status: 404
@@ -38,11 +38,20 @@ module Api
         end
       end
 
+      def destroy
+        address = Address.find(params[:id])
+        if address.destroy
+          render json: address, status: 204
+        else
+          render json: address.errors, status: :unprocessable_entity
+        end
+      end
+
 
       private
 
         def address_params
-          params.permit(:state, :city, :neighborhodd, :street, :notes, :client_id, :user_id)
+          params.permit(:state, :city, :neighborhood, :street, :notes, :client_id, :user_id)
         end
     end
   end

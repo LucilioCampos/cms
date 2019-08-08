@@ -14,6 +14,7 @@ class User < ApplicationRecord
   before_save do
     if self.phones.select(&:client_id).any?
       raise 'Esse telefone já pertence a outro usuário!'
+      self.cancel
     end
   end
 
@@ -24,11 +25,19 @@ class User < ApplicationRecord
 
     self.clients.map do |client|
       client.user_id = nil
-      client.save
+      client.save!
+    end
+
+    self.addresses.map do |address|
+      if address.user_id == self.id
+        address.user_id = nil
+        address.save!
+      end
     end
 
   end
 
   accepts_nested_attributes_for :phones, allow_destroy: true
+  accepts_nested_attributes_for :addresses, allow_destroy: true
 
 end

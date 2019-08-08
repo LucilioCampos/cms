@@ -1,7 +1,7 @@
 class Client < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   enum status: [:active, :inactive]
-  has_many :phones
+  has_many :phones, dependent: :destroy
   has_many :addresses
 
   before_save do
@@ -11,9 +11,18 @@ class Client < ApplicationRecord
   end
 
   before_destroy do
+    self.addresses.map do |address|
+      if address.client_id == self.id
+        address.client_id = nil
+        address.save!
+      end
+    end
+
     self.phones.map do |phone|
       phone.destroy!
     end
+
+    self.user = nil
   end
 
   accepts_nested_attributes_for :phones, :addresses

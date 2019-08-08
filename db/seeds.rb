@@ -22,10 +22,25 @@ puts 'Criando usuários'
     status: :active,
     kind: :manager,
     notes: Faker::Lorem.sentence(10),
-    phones: [Phone.create(
-      kind: :fix,
-      num: Faker::PhoneNumber.phone_number
-    )]
+    phones: [
+      Phone.create(
+        kind: :fix,
+        num: Faker::PhoneNumber.phone_number
+      )
+    ],
+    addresses: [
+      Address.create(
+        state: [ 
+          "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", 
+          "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", 
+          "RJ", "RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO"
+        ].sample,
+        city: Faker::Address.city,
+        neighborhood: Faker::Address.street_name,
+        street: Faker::Address.street_name,
+        notes: Faker::Lorem.sentence(5)
+      )
+    ]
   )
 end
 puts 'Usuários criados!!'
@@ -42,17 +57,20 @@ puts 'Criando Clientes'
     phones: [Phone.create(
       kind: :fix,
       num: Faker::PhoneNumber.phone_number
-    )]
+    )],
+    addresses: [
+      Address.create(
+        state: [ 
+          "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", 
+          "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", 
+          "RJ", "RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO"
+        ].sample,
+        city: Faker::Address.city,
+        neighborhood: Faker::Address.street_name,
+        street: Faker::Address.street_name,
+        notes: Faker::Lorem.sentence(5)
+      )
+    ]
   )
 end
 puts 'Clientes Criados'
-
-puts 'criando Endereços'
-10.times do
-  Address.create(
-    state: Faker::Address.state_abbr,
-    city: Faker::Address.city,
-    neighborhood: Faker::Address.street_name,
-    street: Faker::Address.state_abbr
-  )
-end

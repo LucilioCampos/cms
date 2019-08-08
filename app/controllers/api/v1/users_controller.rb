@@ -51,7 +51,11 @@ module Api
 
       private
         def user_params
-          params.permit(:name, :status, :kind, :notes, phones_attributes: [:id, :kind, :num])
+          params.permit(
+            :name, :status, :kind, :notes, 
+            phones_attributes: [:id, :kind, :num], 
+            addresses_attributes: [:id, :state, :city, :neighborhood, :street, :notes]
+          )
         end
 
     end
