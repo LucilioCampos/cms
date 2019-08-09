@@ -22,7 +22,7 @@ module Api
         if @client.update_attributes(client_params)
           render json: @client, status: 202
         else
-          render @client.errors, status: :unprocessable_entity
+          render json: @client.errors, status: :unprocessable_entity
         end
       end
 
@@ -50,7 +50,8 @@ module Api
         def client_params
           params.permit(:name, :company, :email, :user_id, :notes, :status,
             phones_attributes: [:id, :kind, :num], 
-            addresses_attributes: [:id, :state, :city, :neighborhood, :street, :notes]
+            addresses_attributes: [:id, :state, :city, :neighborhood, :street, :notes],
+            documents_attributes: [:id, :kind, :num, :user_id, :client_id]
           )
         end
       

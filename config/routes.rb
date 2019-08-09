@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :phones
       resources :clients
       resources :addresses
+      resources :documents
     end
   end
 end

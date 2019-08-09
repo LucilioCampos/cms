@@ -54,7 +54,8 @@ module Api
           params.permit(
             :name, :status, :kind, :notes, 
             phones_attributes: [:id, :kind, :num], 
-            addresses_attributes: [:id, :state, :city, :neighborhood, :street, :notes]
+            addresses_attributes: [:id, :state, :city, :neighborhood, :street, :notes],
+            documents_attributes: [:id, :kind, :num, :user_id, :client_id]
           )
         end
 

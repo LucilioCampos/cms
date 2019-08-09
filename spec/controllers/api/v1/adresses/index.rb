@@ -1,18 +1,14 @@
 require 'rails_helper'
 
-describe 'AddressesController', type: :request do
+describe 'GET /api/v1/addresses', type: :request do
   
-  before :all do 
-    @base_url = '/api/v1/addresses' 
-  end
-
   context 'When get /api/v1/addresses' do
     
     before :all do
       create_list(:address, 10)
       create_list(:address_with_user, 10)
       create_list(:address_with_client, 10)
-      get @base_url
+      get '/api/v1/addresses'
     end
 
     it 'returns HTTP response 200' do

@@ -9,7 +9,7 @@ class Phone < ApplicationRecord
   before_save do 
 
     if self.user_id && self.client_id
-      raise "Telefone só pode pertencer a um usuário ou a um cliente"
+      raise 'Telefone só pode pertencer a um usuário ou a um cliente'
       self.cancel
     end
 

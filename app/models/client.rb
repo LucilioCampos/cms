@@ -3,6 +3,7 @@ class Client < ApplicationRecord
   enum status: [:active, :inactive]
   has_many :phones, dependent: :destroy
   has_many :addresses
+  has_many :documents
 
   before_save do
     if self.phones.select(&:user_id).any?
@@ -25,5 +26,5 @@ class Client < ApplicationRecord
     self.user = nil
   end
 
-  accepts_nested_attributes_for :phones, :addresses
+  accepts_nested_attributes_for :phones, :addresses, :documents
 end

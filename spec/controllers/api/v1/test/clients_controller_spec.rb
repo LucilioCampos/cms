@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'ClientsController', type: :request do
-  let!(:clients) { FactoryBot.create_list(:client, 10) }
   before :all do
     @base_url = '/api/v1/clients'
   end
@@ -9,6 +8,7 @@ describe 'ClientsController', type: :request do
   context 'GET /clients', type: :request do
 
     before do
+      create_list(:client, 10)
       get @base_url
     end
 
@@ -33,7 +33,7 @@ describe 'ClientsController', type: :request do
 
     it 'returns HTTP success' do
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).size).to eq 8
+      expect(JSON.parse(response.body).size).to eq 10
     end
   end
 

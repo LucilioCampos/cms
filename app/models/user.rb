@@ -39,5 +39,6 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :phones, allow_destroy: true
   accepts_nested_attributes_for :addresses, allow_destroy: true
+  accepts_nested_attributes_for :documents, allow_destroy: true
 
 end

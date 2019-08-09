@@ -54,9 +54,10 @@ puts 'Criando Clientes'
     user: User.all.sample,
     notes: Faker::Lorem.sentence(5),
     status: :active,
-    phones: [Phone.create(
-      kind: :fix,
-      num: Faker::PhoneNumber.phone_number
+    phones: [
+      Phone.create(
+        kind: :fix,
+        num: Faker::PhoneNumber.phone_number
     )],
     addresses: [
       Address.create(
@@ -74,3 +75,27 @@ puts 'Criando Clientes'
   )
 end
 puts 'Clientes Criados'
+
+puts 'Criando Documentos para usuários'
+cont = 1
+10.times do
+  Document.create(
+    kind: %i[cpf rg cne].sample,
+    num: Faker::IDNumber.valid,
+    user_id: cont
+  )
+  cont += 1
+end
+puts 'Documentos para usuários criado'
+
+puts 'Criando Documentos para clientes'
+cont = 1
+10.times do
+  Document.create(
+    kind: %i[cpf rg cne].sample,
+    num: Faker::IDNumber.valid,
+    client_id: cont
+  )
+  cont += 1
+end
+puts 'Documentos para usuários clientes'

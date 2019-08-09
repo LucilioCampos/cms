@@ -3,5 +3,6 @@ class ClientSerializer < ActiveModel::Serializer
 
   has_many :phones
   has_many :addresses
+  has_many :documents
 
 end

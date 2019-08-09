@@ -34,7 +34,7 @@ describe 'UsersController', type: :request do
 
     it 'returns HTTP success' do
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).size).to eq 6
+      expect(JSON.parse(response.body).size).to eq 8
     end
   end
 
@@ -49,7 +49,7 @@ describe 'UsersController', type: :request do
       
       expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body).size).to eq 1
-      expect(JSON.parse(response.body)[0].size).to eq 6
+      expect(JSON.parse(response.body)[0].size).to eq 8
       expect(JSON.parse(response.body)[0]['name']).to eq @users.name
     end
 
