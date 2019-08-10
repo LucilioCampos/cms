@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::DocumentsController do
+describe Api::V1::DocumentsController, type: :request do
   
   context 'When post a document without user and client' do
     

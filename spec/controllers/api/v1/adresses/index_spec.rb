@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'GET /api/v1/addresses', type: :request do
   
-  context 'When get /api/v1/addresses' do
+  context Api::V1::AddressesController do
     
     before :all do
       create_list(:address, 10)

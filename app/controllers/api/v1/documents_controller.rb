@@ -31,7 +31,7 @@ module Api
 
       def update
         document = Document.find(params[:id])
-        if document.update_attributes
+        if document.update_attributes(document_params)
           render json: document, status: 202
         else
           render json: document, status: :unprocessable_entity

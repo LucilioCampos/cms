@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'PUT /api/v1/addresses/:id' do
+describe Api::V1::AddressesController, type: :request do
   
   context 'When update an address without user and client' do
     

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'ClientsController', type: :request do
+describe Api::V1::ClientsController, type: :request do
   before :all do
     @base_url = '/api/v1/clients'
   end
@@ -9,7 +9,7 @@ describe 'ClientsController', type: :request do
 
     before do
       create_list(:client, 10)
-      get @base_url
+      get  @base_url
     end
 
     it 'returns HTTP success' do

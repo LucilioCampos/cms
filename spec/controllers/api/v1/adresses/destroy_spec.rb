@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'DELETE /api/v1/address/:id', type: :request do
+describe Api::V1::AddressesController, type: :request do
   
   context 'When delete a address without user or client' do
     
