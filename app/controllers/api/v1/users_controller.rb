@@ -13,8 +13,8 @@ module Api
       end
 
       def show
-        user = User.find(params[:id])
-        render json: user, status: 200
+        @user = User.find(params[:id])
+        render json: @user, status: 200
       end
 
       def new
@@ -25,74 +25,38 @@ module Api
       def create
         @user = User.create(user_params)
         if @user.save
-          render json: { data: @user }, status: 202
+          render json: @user, status: 201
         else
-          render json: { data: @user.errors }, status: :unprocessable_entity
+          render json: @user.errors, status: :unprocessable_entity
         end
       end
 
       def update
         @user = User.find(params[:id])
-        @user.phones.build
         if @user.update_attributes(user_params)
-          render json: { data: @user }, status: 202
+          render json: @user, status: 202
         else
-          render json: { data: @user.errors }, status: :unprocessable_entity
+          render json: @user.errors, status: :unprocessable_entity
         end
       end
 
       def destroy
-        user = User.find(params[:id])
-        user.destroy
-        render json: { data: user }, status: :ok
+        @user = User.find(params[:id])
+        if @user.destroy
+          render json: { message: @user } , status: 204
+        else
+          render json: @user.errors, status: 404
+        end
       end
 
       private
         def user_params
-          params.permit(:name, :status, :kind, :notes, phones_attributes: [:id, :kind, :user, :client, :num])
-        end
-
-        def list_phones(phones)
-          list = {}
-          options = []
-          if phones.any?
-            phones.map do |phone|
-              list = {
-                id: phone.id,
-                tipo: phone.kind,
-                numero: phone.num
-              }
-              options.append(list)
-            end
-          else
-            options =  "Não possui"
-          end
-          return options
-        end
-
-        def list_users
-          @users = User.order('created_at DESC').where(status: :active)
-          options = []
-          usuarios = {}
-          @users.each do |user|
-            usuarios = {
-              nome: user.name,
-              status: user.status,
-              perfil: user.kind,
-              observacoes: user.notes,
-              telefones: list_phones(user.phones)
-            }
-            options.append(usuarios)
-          end
-          return options
-        end
-
-        def show_user
-          @user = User.find(params[id])
-        end
-
-        def list_filter
-          @users = User.where(user_params)
+          params.permit(
+            :name, :status, :kind, :notes, 
+            phones_attributes: [:id, :kind, :num], 
+            addresses_attributes: [:id, :state, :city, :neighborhood, :street, :notes],
+            documents_attributes: [:id, :kind, :num, :user_id, :client_id]
+          )
         end
 
     end

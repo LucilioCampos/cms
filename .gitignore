@@ -12,6 +12,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/.vscode/
 
 # Ignore uploaded files in development
 /storage/*
