@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :clients
       resources :addresses
       resources :documents
+      resources :products
     end
   end
 end

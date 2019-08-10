@@ -99,3 +99,13 @@ cont = 1
   cont += 1
 end
 puts 'Documentos para usuários clientes'
+
+puts 'Criando um Produto'
+10.times do
+  Product.create(
+    kind_id: Kind.all.sample.id,
+    description: Faker::Lorem::sentence(5),
+    status: %i[active inactive].sample,
+    price: 10.99
+  )
+end
