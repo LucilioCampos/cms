@@ -21,20 +21,22 @@ module Api
       end
 
       def create
-        document = Document.create(document_params)
-        if document.save
-          render json: document, status: 200
+        doc = DocumentService.new(document_params).call
+        document = Document.create(doc) if doc
+        if doc && document.save
+          render json: document, status: 201
         else
-          render json: document.errors, status: :unprocessable_entity
+          render json: 'Favor verificar os dados informaods', status: :unprocessable_entity
         end
       end
 
       def update
-        document = Document.find(params[:id])
-        if document.update_attributes(document_params)
+        doc = DocumentService.new(document_params, params[:id]).call
+        document = Document.find(params[:id]) if doc
+        if doc && document.update_attributes(doc)
           render json: document, status: 202
         else
-          render json: document, status: :unprocessable_entity
+          render json: 'Favor verificar dados informados', status: :unprocessable_entity
         end
       end
 

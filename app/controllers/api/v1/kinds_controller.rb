@@ -32,7 +32,7 @@ module Api
       def update
 				kind = Kind.find(params[:id])
 				if kind.update_attributes(kind_params)
-					render json: kind, status: 201
+					render json: kind, status: 202
 				else
 					render json: { status: 'ERROR', message:'kind not update', tipo: kind.errors }, status: :unprocessable_entity
 				end

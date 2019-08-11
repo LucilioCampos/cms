@@ -17,6 +17,11 @@ module Api
       end
 
       def create
+        product = ProductCreate.new(product_params).call
+        render json: product, status: 201 if product.save
+      end
+
+      def creatase
         product = Product.create(product_params)
         if product.save
           render json: product, status: 201
