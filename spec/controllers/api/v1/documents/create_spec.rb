@@ -10,7 +10,7 @@ describe Api::V1::DocumentsController, type: :request do
     end
 
     it 'returns a HTTP status 201' do
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(201)
     end
 
     it 'returns a resource size' do
@@ -43,7 +43,7 @@ describe Api::V1::DocumentsController, type: :request do
     end
 
     it 'returns a HTTP status 200' do
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(201)
     end
 
     it 'returns a resource size' do
@@ -68,7 +68,7 @@ describe Api::V1::DocumentsController, type: :request do
     end
 
     it 'returns a HTTP status 200' do
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(201)
     end
 
     it 'returns a resource size' do
