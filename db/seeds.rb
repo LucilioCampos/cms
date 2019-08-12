@@ -104,8 +104,20 @@ puts 'Criando um Produto'
 10.times do
   Product.create(
     kind_id: Kind.all.sample.id,
-    description: Faker::Lorem::sentence(5),
+    description: Faker::Lorem.sentence(5),
     status: %i[active inactive].sample,
     price: 10.99
   )
 end
+
+puts 'Criando os discontos'
+10.times do
+  Discount.create(
+    name: Faker::FunnyName.name,
+    description: Faker::Lorem.sentence(3),
+    kind: %i[percentage money].sample,
+    status: %i[active inactive].sample,
+    value: rand(1..10)
+  )
+end
+puts 'Descontos Criados'
