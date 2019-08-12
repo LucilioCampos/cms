@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :addresses
       resources :documents
       resources :products
+      resources :discounts
     end
   end
 end
