@@ -1,9 +1,10 @@
 class Sale < ApplicationRecord
   belongs_to :client
   belongs_to :user
-  belongs_to :discount
-  has_one :client
-  has_one :discount
-  has_one :user
-  has_one :traffic_statuses
+  has_many :product_items
+
+  validates_presence_of :client, :user
+
+  accepts_nested_attributes_for :product_items
+
 end

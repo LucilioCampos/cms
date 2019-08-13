@@ -117,7 +117,26 @@ puts 'Criando os discontos'
     description: Faker::Lorem.sentence(3),
     kind: %i[percentage money].sample,
     status: %i[active inactive].sample,
-    value: rand(1..10)
+    value: rand(1.5..3.0)
   )
 end
 puts 'Descontos Criados'
+
+puts 'Criando as vendas'
+10.times do
+  Sale.create(
+    client_id: Client.all.sample.id, 
+    user_id: User.all.sample.id,
+    discount_id: nil,
+    notes: Faker::Lorem.sentence(3)
+  )
+end
+puts 'Vendas criadas'
+
+puts 'Criando as Quantidade de produtos'
+10.times do
+  ProductQuantity.create(
+    product_id: Product.all.sample.id,
+    quantity: rand(1..100)
+  )
+end

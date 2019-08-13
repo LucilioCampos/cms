@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :documents
       resources :products
       resources :discounts
+      resources :sales
+      resources :product_quantities
     end
   end
 end

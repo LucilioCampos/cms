@@ -50,8 +50,7 @@ module Api
       private
       def discount_params
         params.permit(
-          :name, :description, :kind, :status, :value, 
-          sales_attributes: [:client_id, :user_id, :notes]
+          :name, :description, :kind, :status, :value, :discount_id
         )
       end
     end

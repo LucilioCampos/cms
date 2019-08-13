@@ -4,6 +4,7 @@ class Client < ApplicationRecord
   has_many :phones, dependent: :destroy
   has_many :addresses
   has_many :documents
+  has_many :sales
 
   before_save do
     if self.phones.select(&:user_id).any?

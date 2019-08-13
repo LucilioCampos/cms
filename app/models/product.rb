@@ -6,4 +6,6 @@ class Product < ApplicationRecord
   has_one :product_create
 
   enum status: [:active, :inactive]
+
+  accepts_nested_attributes_for :product_quantities, reject_if: ->(attributes){ attributes['quantity'].blank? }
 end

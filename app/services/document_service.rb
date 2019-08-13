@@ -9,6 +9,8 @@ class DocumentService < ApplicationService
     valid_state
   end
 
+  private
+
   def valid_state
     if @object
       user_id =  @object.user_id != nil ? true : false

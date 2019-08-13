@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_10_141556) do
+ActiveRecord::Schema.define(version: 2019_08_13_160800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,21 @@ ActiveRecord::Schema.define(version: 2019_08_10_141556) do
     t.index ["product_id"], name: "index_product_ins_on_product_id"
   end
 
+  create_table "product_items", force: :cascade do |t|
+    t.bigint "sale_id"
+    t.integer "status"
+    t.float "total_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "product_quantity_id"
+    t.bigint "discount_id"
+    t.bigint "product_id"
+    t.index ["discount_id"], name: "index_product_items_on_discount_id"
+    t.index ["product_id"], name: "index_product_items_on_product_id"
+    t.index ["product_quantity_id"], name: "index_product_items_on_product_quantity_id"
+    t.index ["sale_id"], name: "index_product_items_on_sale_id"
+  end
+
   create_table "product_outs", force: :cascade do |t|
     t.bigint "product_id"
     t.bigint "traffic_id"
@@ -116,9 +131,9 @@ ActiveRecord::Schema.define(version: 2019_08_10_141556) do
   end
 
   create_table "sale_products", force: :cascade do |t|
-    t.integer "status"
-    t.integer "quantity"
     t.bigint "sale_id"
+    t.integer "status"
+    t.integer "total_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sale_id"], name: "index_sale_products_on_sale_id"
@@ -181,6 +196,10 @@ ActiveRecord::Schema.define(version: 2019_08_10_141556) do
   add_foreign_key "phones", "clients"
   add_foreign_key "phones", "users"
   add_foreign_key "product_ins", "products"
+  add_foreign_key "product_items", "discounts"
+  add_foreign_key "product_items", "product_quantities"
+  add_foreign_key "product_items", "products"
+  add_foreign_key "product_items", "sales"
   add_foreign_key "product_outs", "products"
   add_foreign_key "product_outs", "traffics"
   add_foreign_key "product_quantities", "products"
