@@ -14,7 +14,7 @@ describe Api::V1::DiscountsController, type: :request do
     end
 
     it 'returns a resource size' do
-      expect(JSON.parse(response.body).size).to eq 7
+      expect(JSON.parse(response.body).size).to eq 6
     end
 
     it  'returns a new name' do

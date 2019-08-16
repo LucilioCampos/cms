@@ -33,7 +33,7 @@ module Api
       def update
         product = Product.find(params[:id])
         if product.update_attributes(product_params)
-          render json: product, status: 201
+          render json: product, status: 202
         else
           render json: { message: 'Não foi atualizar criar o produto' }, status: 404
         end

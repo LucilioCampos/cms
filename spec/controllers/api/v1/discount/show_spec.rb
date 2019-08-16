@@ -14,7 +14,7 @@ describe Api::V1::DiscountsController, type: :request do
     end
 
     it 'returns a resource size' do
-      expect(JSON.parse(response.body).size).to eq 7
+      expect(JSON.parse(response.body).size).to eq 6
     end
 
     it  'returns a resource id' do
@@ -41,8 +41,5 @@ describe Api::V1::DiscountsController, type: :request do
       expect(JSON.parse(response.body)['value'].class).to be String
     end
 
-    it  'returns a resource sales' do
-      expect(JSON.parse(response.body)['sales']).to eq @disc.sales
-    end
   end
 end
