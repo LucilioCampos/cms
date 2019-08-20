@@ -15,7 +15,7 @@ class SaleService < ApplicationService
   def valid_sale
     if @sale && valid_state?
       return @params if @sale.product_items.select {|item| item > 0 }
-      return
+      raise 'Dados inválidos'
     end
     return @params if valid_state?
   end

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :discounts
       resources :sales
       resources :product_quantities
+      resources :sale_products
     end
   end
 end

@@ -17,16 +17,11 @@ module Api
       end
 
       def create
-        product = ProductCreate.new(product_params).call
-        render json: product, status: 201 if product.save
-      end
-
-      def creatase
         product = Product.create(product_params)
         if product.save
           render json: product, status: 201
         else
-          render json: { message: 'Não foi possível criar o produto' }, status: 404
+          render json: product.erros, status: :unprocessable_entity
         end
       end
 

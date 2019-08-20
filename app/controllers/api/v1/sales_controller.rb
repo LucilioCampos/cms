@@ -53,7 +53,7 @@ module Api
       def sale_params
         params.permit(
           :client_id, :user_id, :discount_id, :notes,
-          product_items_attributes: [:status, :total_price, :discount_id]
+          product_items_attributes: [:id, :status, :total_price, :discount_id]
         )
       end
     end

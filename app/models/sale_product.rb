@@ -1,8 +1,23 @@
 class SaleProduct < ApplicationRecord
   belongs_to :sale
   enum status: [:pending, :payed]
+  before_save :update_sale_product
+  before_create :create_sale_product
 
-  before_save do
+
+  private
+  def update_sale_product
+    calc_quantity
+    calc_total_price
+    self.total_price = self.total_price.round(2)
+  end
+
+  def create_sale_product
+    calc_total_price
+    self.status = :pending
+  end
+
+  def calc_total_price
     quantity = 0
     products = ProductItem.where(sale_id: self.sale_id)
     value = 0
@@ -10,10 +25,17 @@ class SaleProduct < ApplicationRecord
       value += product.total_price
       quantity += 1
     end
-    self.total_price = value
-    if self.status == 'payed'
-      quan = ProductQuantity.where(product_id: self.productItem.product_id)
-      quan.quantity - quantity
+    self.total_price = value.round(2)
+  end
+
+  def calc_quantity
+    products = ProductItem.where(sale_id: self.sale_id)
+    if self.status == :payed
+      con = 0
+      products.map do product
+        dec = ProductQuantity.where(id: product.id)
+        dec.quantity -= product.quantity
+      end
     end
   end
 

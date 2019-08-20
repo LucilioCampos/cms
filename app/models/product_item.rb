@@ -3,10 +3,13 @@ class ProductItem < ApplicationRecord
   belongs_to :discount, optional: true
   enum status: [:pending, :payed]
 
-  before_save do
-    value = 0
+  before_save :prepare_to_sale
+
+  private
+
+  def prepare_to_sale
+    value = self.total_price.round(2)
     if self.discount_id
-      debugger
       discount = Discount.where(id: self.discount_id).first
       if discount.kind == 'percentage'
         value = (self.total_price * discount.value) / 100
@@ -16,4 +19,5 @@ class ProductItem < ApplicationRecord
       self.total_price = value.round(2)
     end
   end
+
 end
