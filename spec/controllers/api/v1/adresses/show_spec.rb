@@ -14,7 +14,7 @@ describe Api::V1::AddressesController, type: :request do
     end
 
     it 'returns all attributes' do
-      expect(JSON.parse(response.body).size).to eq 8
+      expect(JSON.parse(response.body).size).to eq 9
     end
 
     it 'returns a state attributes' do
@@ -31,6 +31,10 @@ describe Api::V1::AddressesController, type: :request do
 
     it 'returns a street attributes' do
       expect(JSON.parse(response.body)['street']).to eq @add.street
+    end
+
+    it 'returns a cep attributes' do
+      expect(JSON.parse(response.body)['cep']).to eq @add.cep
     end
 
     it 'returns a notes attributes' do
@@ -59,7 +63,7 @@ describe Api::V1::AddressesController, type: :request do
     end
 
     it 'returns all attributes' do
-      expect(JSON.parse(response.body).size).to eq 8
+      expect(JSON.parse(response.body).size).to eq 9
     end
 
     it 'returns a state attributes' do
@@ -103,7 +107,7 @@ describe Api::V1::AddressesController, type: :request do
     end
 
     it 'returns all attributes' do
-      expect(JSON.parse(response.body).size).to eq 8
+      expect(JSON.parse(response.body).size).to eq 9
     end
 
     it 'returns a state attributes' do

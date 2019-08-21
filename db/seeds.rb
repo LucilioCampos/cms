@@ -38,6 +38,7 @@ puts 'Criando usuários'
         city: Faker::Address.city,
         neighborhood: Faker::Address.street_name,
         street: Faker::Address.street_name,
+        cep: CepBrasil::Random.generate_formated,
         notes: Faker::Lorem.sentence(5)
       )
     ]
@@ -69,6 +70,7 @@ puts 'Criando Clientes'
         city: Faker::Address.city,
         neighborhood: Faker::Address.street_name,
         street: Faker::Address.street_name,
+        cep: CepBrasil::Random.generate_formated,
         notes: Faker::Lorem.sentence(5)
       )
     ]
@@ -138,5 +140,37 @@ puts 'Criando as Quantidade de produtos'
   ProductQuantity.create(
     product_id: Product.all.sample.id,
     quantity: rand(1..100)
+  )
+end
+
+puts 'Quantidades criadas'
+
+puts 'Criando Descontos'
+
+10.times do
+  Discount.create(
+    name: Faker::Name.name,
+    description: Faker::Lorem.sentence(2),
+    kind: %i[money percentage].sample,
+    status: :active,
+    value: rand(1.00..99.99).round(2)
+  )
+end
+
+puts 'Descontos criados'
+
+puts 'Criando as vendas'
+
+10.times do
+  Sale.create(
+    client_id: Client.all.sample.id,
+    user_id: User.all.sample.id,
+    notes: Faker::Lorem.sentence(2),
+    product_items: [
+      ProductItem.create(
+        total_price: rand(1.99..999.99).round(2),
+        discount_id: Discount.all.sample.id
+      )
+    ]
   )
 end
