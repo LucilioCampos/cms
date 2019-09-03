@@ -12,11 +12,19 @@ gem 'puma', '~> 3.11'
 
 gem 'rspec'
 
+gem 'devise'
+
+gem 'bcrypt'
+
+gem 'knock'
+
 gem 'active_model_serializers'
 
 gem 'rack-cors'
 
 gem 'solargraph', group: :development
+
+gem 'simplecov', require: false, group: :test
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
@@ -46,9 +54,6 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'cep_brasil'
   gem 'rest-client'
-end
-
-group :development do
 end
 
 

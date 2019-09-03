@@ -1,6 +1,6 @@
 module Api
   module V1
-    class DiscountsController < ApplicationController
+    class DiscountsController < BaseController
 
       def index
         discounts = Discount.order(created_at: :desc)

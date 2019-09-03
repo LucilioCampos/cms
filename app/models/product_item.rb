@@ -5,10 +5,8 @@ class ProductItem < ApplicationRecord
 
   before_save :prepare_to_sale
 
-  private
-
   def prepare_to_sale
-    value = self.total_price.round(2)
+    value = self.total_price
     if self.discount_id
       discount = Discount.where(id: self.discount_id).first
       if discount.kind == 'percentage'

@@ -1,6 +1,7 @@
 module Api
   module V1
     class AddressesController < ApplicationController
+      before_action :authenticate_user!
 
       def index
         addresses = Address.order('created_at DESC')

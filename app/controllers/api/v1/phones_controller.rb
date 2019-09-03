@@ -1,6 +1,6 @@
 module Api
   module V1
-    class PhonesController < ApplicationController
+    class PhonesController < BaseController
 
       def index
         @phones = Phone.all

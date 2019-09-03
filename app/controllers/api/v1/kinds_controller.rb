@@ -1,6 +1,6 @@
 module Api
   module V1
-    class KindsController < ApplicationController
+    class KindsController < BaseController
 
       def index
         @kinds = Kind.order('created_at DESC')

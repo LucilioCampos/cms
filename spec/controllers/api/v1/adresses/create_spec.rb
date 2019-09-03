@@ -1,15 +1,21 @@
 require 'rails_helper'
 
 describe Api::V1::AddressesController, type: :request do
+
+  before :all do
+    
+  end
   
   context 'When create an address without user and client' do
 
     before :all do
       @add = build(:address)
-      post "/api/v1/addresses", params: @add.attributes
+      @user = create(:user, email: 'lucilio_oliveira@hotmail.com', password: '123456')
+      post "/api/v1/addresses", params: @add.attributes, headers: :Authorization => sign_in(@user)
     end
 
     it 'return HTTP status 201' do
+      puts sign_in(@user)
       expect(response).to have_http_status(201)
     end
 

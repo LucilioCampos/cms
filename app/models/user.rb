@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
+  alias authenticate valid_password?
+         
   has_many :addresses
   has_many :phones, dependent: :destroy
   has_many :sales
@@ -7,6 +12,7 @@ class User < ApplicationRecord
   has_many :clients
   enum kind: [:manager, :salesman]
   enum status: [:active, :inactive]
+  
 
   scope :search_name, -> (name) { where("name like ?", "#{name}%")}
   scope :campos, -> (filter) { select(filter) }

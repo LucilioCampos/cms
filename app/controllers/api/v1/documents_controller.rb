@@ -1,6 +1,6 @@
 module Api
   module V1
-    class DocumentsController < ApplicationController
+    class DocumentsController < BaseController
 
       def index
         documents = Document.order('created_at DESC')

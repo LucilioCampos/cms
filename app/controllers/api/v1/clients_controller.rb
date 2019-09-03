@@ -1,6 +1,6 @@
 module Api
   module V1
-    class ClientsController < ApplicationController
+    class ClientsController < BaseController
 
       def index
         @clients = Client.order('CREATED_AT DESC')

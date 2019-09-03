@@ -1,6 +1,6 @@
 module Api
   module V1
-    class ProductQuantities < ApplicationController
+    class ProductQuantities < BaseController
 
       def index
         quantities = ProductQuantity.order(id: :desc)

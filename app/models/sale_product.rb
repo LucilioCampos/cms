@@ -10,6 +10,10 @@ class SaleProduct < ApplicationRecord
     calc_quantity
     calc_total_price
     self.total_price = self.total_price.round(2)
+    if self.status == :payed
+      itens = ProductItem.where(sale_id: self.sale_id)
+      itens.map { |item| item.status = :payed }
+    end
   end
 
   def create_sale_product

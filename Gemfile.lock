@@ -50,6 +50,7 @@ GEM
     arel (9.0.0)
     ast (2.4.0)
     backport (1.1.2)
+    bcrypt (3.1.13)
     bootsnap (1.4.4)
       msgpack (~> 1.0)
     builder (3.2.3)
@@ -60,7 +61,14 @@ GEM
     concurrent-ruby (1.1.5)
     crass (1.0.4)
     database_cleaner (1.7.0)
+    devise (4.7.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
     diff-lcs (1.3)
+    docile (1.3.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.8.0)
@@ -80,7 +88,13 @@ GEM
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.3)
+    json (2.2.0)
     jsonapi-renderer (0.2.2)
+    jwt (1.5.6)
+    knock (2.1.1)
+      bcrypt (~> 3.1)
+      jwt (~> 1.5)
+      rails (>= 4.2)
     loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -105,6 +119,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     nokogiri (1.10.3-x64-mingw32)
       mini_portile2 (~> 2.4.0)
+    orm_adapter (0.5.0)
     parallel (1.17.0)
     parser (2.6.3.0)
       ast (~> 2.4.0)
@@ -141,6 +156,9 @@ GEM
       thor (>= 0.19.0, < 2.0)
     rainbow (3.0.0)
     rake (12.3.3)
+    responders (3.0.0)
+      actionpack (>= 5.0)
+      railties (>= 5.0)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
@@ -181,6 +199,11 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
     ruby-progressbar (1.10.1)
+    simplecov (0.17.0)
+      docile (~> 1.1)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.2)
     solargraph (0.36.0)
       backport (~> 1.1)
       bundler (>= 1.17.2)
@@ -212,6 +235,8 @@ GEM
       unf_ext
     unf_ext (0.0.7.6)
     unicode-display_width (1.6.0)
+    warden (1.2.8)
+      rack (>= 2.0.6)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
@@ -223,12 +248,15 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  bcrypt
   bootsnap (>= 1.1.0)
   byebug
   cep_brasil
   database_cleaner
+  devise
   factory_bot_rails
   faker
+  knock
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   rack-cors
@@ -236,6 +264,7 @@ DEPENDENCIES
   rest-client
   rspec
   rspec-rails (~> 3.8)
+  simplecov
   solargraph
   tzinfo-data
 

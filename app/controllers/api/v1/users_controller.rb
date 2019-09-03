@@ -1,7 +1,8 @@
 module Api
   module V1
-    class UsersController < ApplicationController
-
+    class UsersController < BaseController
+      include Knock::Authenticable
+      
       def index 
         @users = User.order('created_at DESC')
         @users = User.search_name(params[:search_name]) if params[:search_name].present?

@@ -6,6 +6,19 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+puts 'Criando super user'
+
+User.create(
+  name: 'Lucílio Oliveira Campos Junior',
+  status: :active,
+  kind: :manager,
+  notes: 'Usuário admin',
+  password: '123456',
+  email: 'lucilio_oliveira@hotmail.com'
+)
+
+puts 'Admin criado'
+
 puts 'Criando os Tipos'
 10.times do
   kind = Kind.create(
@@ -22,6 +35,8 @@ puts 'Criando usuários'
     status: :active,
     kind: :manager,
     notes: Faker::Lorem.sentence(10),
+    password: Faker::Lorem.sentence(1),
+    email: Faker::Internet.email,
     phones: [
       Phone.create(
         kind: :fix,
@@ -79,14 +94,12 @@ end
 puts 'Clientes Criados'
 
 puts 'Criando Documentos para usuários'
-cont = 1
 10.times do
   Document.create(
     kind: %i[cpf rg cne].sample,
     num: Faker::IDNumber.valid,
-    user_id: cont
+    user_id: User.all.sample.id
   )
-  cont += 1
 end
 puts 'Documentos para usuários criado'
 

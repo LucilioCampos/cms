@@ -1,6 +1,6 @@
 module Api
   module V1
-    class SalesController < ApplicationController
+    class SalesController < BaseController
 
       def index
         sales = Sale.order(id: :desc)

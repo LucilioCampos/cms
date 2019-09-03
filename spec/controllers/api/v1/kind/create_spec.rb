@@ -6,7 +6,14 @@ describe Api::V1::KindsController, type: :request do
     
     before :all do
       @kind = build(:kind)
-      post '/api/v1/kinds', params: @kind.attributes
+      def auth_token
+        token = Knock::AuthToken.new(payload: { sub: users(:one).id }).token
+
+        {
+          'Authorization': "Bearer #{token}"
+        }
+      end
+      post '/api/v1/kinds', params: @kind.attributes, headers: auth_token
     end
 
     it 'returns a HTTP status 201' do
