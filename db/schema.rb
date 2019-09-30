@@ -63,11 +63,6 @@ ActiveRecord::Schema.define(version: 2019_08_23_015607) do
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
-  create_table "jwt_blacklist", force: :cascade do |t|
-    t.string "jti", null: false
-    t.index ["jti"], name: "index_jwt_blacklist_on_jti"
-  end
-
   create_table "kinds", force: :cascade do |t|
     t.string "name"
     t.string "description"

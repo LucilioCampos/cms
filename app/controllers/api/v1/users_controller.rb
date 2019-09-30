@@ -24,8 +24,9 @@ module Api
       end
 
       def create
-        @user = User.create(user_params)
-        if @user.save
+        @user = User.new(user_params)
+        @user.password = 'P@assC0DE'
+        if @user.save!
           render json: @user, status: 201
         else
           render json: @user.errors, status: :unprocessable_entity
@@ -53,7 +54,7 @@ module Api
       private
         def user_params
           params.permit(
-            :name, :status, :kind, :notes, 
+            :name, :status, :kind, :notes, :email, 
             phones_attributes: [:id, :kind, :num], 
             addresses_attributes: [:id, :state, :city, :neighborhood, :street, :notes],
             documents_attributes: [:id, :kind, :num, :user_id, :client_id]
