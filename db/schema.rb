@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_27_173924) do
+ActiveRecord::Schema.define(version: 2019_08_23_015607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,13 +18,14 @@ ActiveRecord::Schema.define(version: 2019_07_27_173924) do
   create_table "addresses", force: :cascade do |t|
     t.integer "state"
     t.string "city"
-    t.string "neighborhodd"
+    t.string "neighborhood"
     t.string "street"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "client_id"
     t.bigint "user_id"
+    t.string "cep"
     t.index ["client_id"], name: "index_addresses_on_client_id"
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
@@ -88,6 +89,21 @@ ActiveRecord::Schema.define(version: 2019_07_27_173924) do
     t.index ["product_id"], name: "index_product_ins_on_product_id"
   end
 
+  create_table "product_items", force: :cascade do |t|
+    t.bigint "sale_id"
+    t.integer "status"
+    t.float "total_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "product_quantity_id"
+    t.bigint "discount_id"
+    t.bigint "product_id"
+    t.index ["discount_id"], name: "index_product_items_on_discount_id"
+    t.index ["product_id"], name: "index_product_items_on_product_id"
+    t.index ["product_quantity_id"], name: "index_product_items_on_product_quantity_id"
+    t.index ["sale_id"], name: "index_product_items_on_sale_id"
+  end
+
   create_table "product_outs", force: :cascade do |t|
     t.bigint "product_id"
     t.bigint "traffic_id"
@@ -109,18 +125,18 @@ ActiveRecord::Schema.define(version: 2019_07_27_173924) do
     t.bigint "kind_id"
     t.string "description"
     t.integer "status"
-    t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "price"
     t.index ["kind_id"], name: "index_products_on_kind_id"
   end
 
   create_table "sale_products", force: :cascade do |t|
-    t.integer "status"
-    t.integer "quantity"
     t.bigint "sale_id"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "total_price"
     t.index ["sale_id"], name: "index_sale_products_on_sale_id"
   end
 
@@ -171,6 +187,13 @@ ActiveRecord::Schema.define(version: 2019_07_27_173924) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "addresses", "clients"
@@ -181,6 +204,10 @@ ActiveRecord::Schema.define(version: 2019_07_27_173924) do
   add_foreign_key "phones", "clients"
   add_foreign_key "phones", "users"
   add_foreign_key "product_ins", "products"
+  add_foreign_key "product_items", "discounts"
+  add_foreign_key "product_items", "product_quantities"
+  add_foreign_key "product_items", "products"
+  add_foreign_key "product_items", "sales"
   add_foreign_key "product_outs", "products"
   add_foreign_key "product_outs", "traffics"
   add_foreign_key "product_quantities", "products"

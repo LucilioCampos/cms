@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.5'
+ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
@@ -11,6 +11,20 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 
 gem 'rspec'
+
+gem 'devise'
+
+gem 'bcrypt'
+
+gem 'knock'
+
+gem 'active_model_serializers'
+
+gem 'rack-cors'
+
+gem 'solargraph', group: :development
+
+gem 'simplecov', require: false, group: :test
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
@@ -38,9 +52,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
-end
-
-group :development do
+  gem 'cep_brasil'
+  gem 'rest-client'
 end
 
 
