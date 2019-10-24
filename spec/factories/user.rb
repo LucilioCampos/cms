@@ -6,7 +6,7 @@ FactoryBot.define do
     password { '123456' }
     status { 'active' }
     kind { 'manager' }
-    notes { Faker::Lorem.sentence(10) }
+    notes { Faker::Lorem.sentence(word_count: 10) }
   end
 
 end

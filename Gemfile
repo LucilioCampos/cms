@@ -7,6 +7,8 @@ ruby '2.5.1'
 gem 'rails', '~> 5.2.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
+# User sqlite3 on dev env
+gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 
@@ -54,6 +56,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'cep_brasil'
   gem 'rest-client'
+  gem 'rubocop-faker'
 end
 
 

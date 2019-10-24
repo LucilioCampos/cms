@@ -23,7 +23,7 @@ puts 'Criando os Tipos'
 10.times do
   kind = Kind.create(
     name: Faker::Name.name,
-    description: Faker::Lorem.sentence(4)
+    description: Faker::Lorem.sentence(word_count: 4)
   )
 end
 puts 'Tipos Criados!'
@@ -34,8 +34,8 @@ puts 'Criando usuários'
     name: Faker::Name.name,
     status: :active,
     kind: :manager,
-    notes: Faker::Lorem.sentence(10),
-    password: Faker::Lorem.sentence(1),
+    notes: Faker::Lorem.sentence(word_count: 10),
+    password: Faker::Lorem.sentence(word_count: 1),
     email: Faker::Internet.email,
     phones: [
       Phone.create(
@@ -45,16 +45,16 @@ puts 'Criando usuários'
     ],
     addresses: [
       Address.create(
-        state: [ 
-          "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", 
-          "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", 
+        state: [
+          "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO",
+          "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI",
           "RJ", "RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO"
         ].sample,
         city: Faker::Address.city,
         neighborhood: Faker::Address.street_name,
         street: Faker::Address.street_name,
-        cep: CepBrasil::Random.generate_formated,
-        notes: Faker::Lorem.sentence(5)
+        cep: CepBrasil::Random.generate_formatted,
+        notes: Faker::Lorem.sentence(word_count: 5)
       )
     ]
   )
@@ -68,7 +68,7 @@ puts 'Criando Clientes'
     company: Faker::Company.name,
     email: Faker::Internet.email,
     user: User.all.sample,
-    notes: Faker::Lorem.sentence(5),
+    notes: Faker::Lorem.sentence(word_count: 5),
     status: :active,
     phones: [
       Phone.create(
@@ -77,16 +77,16 @@ puts 'Criando Clientes'
     )],
     addresses: [
       Address.create(
-        state: [ 
-          "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", 
-          "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", 
+        state: [
+          "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO",
+          "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI",
           "RJ", "RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO"
         ].sample,
         city: Faker::Address.city,
         neighborhood: Faker::Address.street_name,
         street: Faker::Address.street_name,
-        cep: CepBrasil::Random.generate_formated,
-        notes: Faker::Lorem.sentence(5)
+        cep: CepBrasil::Random.generate_formatted,
+        notes: Faker::Lorem.sentence(word_count: 5)
       )
     ]
   )
@@ -119,7 +119,7 @@ puts 'Criando um Produto'
 10.times do
   Product.create(
     kind_id: Kind.all.sample.id,
-    description: Faker::Lorem.sentence(5),
+    description: Faker::Lorem.sentence(word_count: 5),
     status: %i[active inactive].sample,
     price: 10.99
   )
@@ -129,7 +129,7 @@ puts 'Criando os discontos'
 10.times do
   Discount.create(
     name: Faker::FunnyName.name,
-    description: Faker::Lorem.sentence(3),
+    description: Faker::Lorem.sentence(word_count: 3),
     kind: %i[percentage money].sample,
     status: %i[active inactive].sample,
     value: rand(1.5..3.0)
@@ -140,10 +140,10 @@ puts 'Descontos Criados'
 puts 'Criando as vendas'
 10.times do
   Sale.create(
-    client_id: Client.all.sample.id, 
+    client_id: Client.all.sample.id,
     user_id: User.all.sample.id,
     discount_id: nil,
-    notes: Faker::Lorem.sentence(3)
+    notes: Faker::Lorem.sentence(word_count: 3)
   )
 end
 puts 'Vendas criadas'
@@ -163,7 +163,7 @@ puts 'Criando Descontos'
 10.times do
   Discount.create(
     name: Faker::Name.name,
-    description: Faker::Lorem.sentence(2),
+    description: Faker::Lorem.sentence(word_count: 2),
     kind: %i[money percentage].sample,
     status: :active,
     value: rand(1.00..99.99).round(2)
@@ -178,7 +178,7 @@ puts 'Criando as vendas'
   Sale.create(
     client_id: Client.all.sample.id,
     user_id: User.all.sample.id,
-    notes: Faker::Lorem.sentence(2),
+    notes: Faker::Lorem.sentence(word_count: 2),
     product_items: [
       ProductItem.create(
         total_price: rand(1.99..999.99).round(2),

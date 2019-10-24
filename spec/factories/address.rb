@@ -11,7 +11,7 @@ FactoryBot.define do
     city { Faker::Address.city }
     neighborhood { Faker::Address.street_name }
     street { Faker::Address.street_name }
-    notes { Faker::Lorem.sentence(5) }
+    notes { Faker::Lorem.sentence(word_count: 5) }
   end
 
   factory :address_with_user, class: Address do
@@ -25,7 +25,7 @@ FactoryBot.define do
     city { Faker::Address.city }
     neighborhood { Faker::Address.street_name }
     street { Faker::Address.street_name }
-    notes { Faker::Lorem.sentence(5) }
+    notes { Faker::Lorem.sentence(word_count: 5) }
     user_id { create(:user).id }
   end
 
@@ -40,7 +40,7 @@ FactoryBot.define do
     city { Faker::Address.city }
     neighborhood { Faker::Address.street_name }
     street { Faker::Address.street_name }
-    notes { Faker::Lorem.sentence(5) }
+    notes { Faker::Lorem.sentence(word_count: 5) }
     client_id { create(:client).id }
   end
 

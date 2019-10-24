@@ -4,7 +4,7 @@ FactoryBot.define do
     company { Faker::Company.name }
     email { Faker::Internet.email }
     user { FactoryBot.create(:user) }
-    notes { Faker::Lorem.sentence(5) }
+    notes { Faker::Lorem.sentence(word_count: 5) }
     status { :active }
   end
 end
