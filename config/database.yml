@@ -15,14 +15,14 @@
 # gem 'pg'
 #
 default: &default
-  host: 127.0.0.1
+  host: postgresdb
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: postgres
-  password: Postgres2018!
+  password: 
 
 development:
   <<: *default

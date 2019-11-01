@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  postgresdb:
+    image: "postgres"
+
+  web: &app
+    build: .
+    depends_on:
+      - postgresdb
+    command: ["rake", "db:create", "db:migrate"]
+
+  migrate:
+    <<: *app
+    command: ["puma", "-C", "config/puma.rb"]
+    ports:
+      - "3000:3000"
