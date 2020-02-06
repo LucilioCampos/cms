@@ -1,21 +1,24 @@
 require 'rails_helper'
 
-describe Api::V1::AddressesController, type: :request do
+def authenticated_header(user)
+  token = Knock::AuthToken.new(payload: { sub: user.id }).token
+  { 'Authorization': "Bearer #{token}" }
+end
 
-  before :all do
-    
-  end
+describe Api::V1::AddressesController, type: :request do
   
   context 'When create an address without user and client' do
 
     before :all do
       @add = build(:address)
-      @user = create(:user, email: 'lucilio_oliveira@hotmail.com', password: '123456')
-      post "/api/v1/addresses", params: @add.attributes, headers: :Authorization => sign_in(@user)
+      @user = create(:user, kind: :manager)
+      @headers = authenticated_header(@user)
+      post "/api/v1/addresses", headers: @headers, params: @add.attributes
     end
 
     it 'return HTTP status 201' do
-      puts sign_in(@user)
+      puts authenticated_header(@user)
+      puts response.body
       expect(response).to have_http_status(201)
     end
 

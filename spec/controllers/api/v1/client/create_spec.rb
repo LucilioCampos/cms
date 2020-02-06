@@ -1,12 +1,19 @@
 require 'rails_helper'
 
+def authenticated_header(user)
+  token = Knock::AuthToken.new(payload: { sub: user.id }).token
+  { 'Authorization': "Bearer #{token}" }
+end
+
 describe Api::V1::ClientsController, type: :request do
 
   context 'When create a new cliente' do
 
     before :all do
+      @user = create(:user)
+      @headers = authenticated_header(@user)
       @cliente = build(:client)
-      post "/api/v1/clients", params: @cliente.attributes
+      post "/api/v1/clients", params: @cliente.attributes, headers: @headers
     end
 
     it 'returns HTTP status 201' do

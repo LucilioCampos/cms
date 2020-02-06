@@ -5,8 +5,10 @@ describe Api::V1::DiscountsController, type: :request do
   context 'When get a discount' do
     
     before :all do
+      @user = create(:user)
+      @headers = authenticated_header(@user)
       @disc = create(:discount)
-      get "/api/v1/discounts/#{@disc.id}"
+      get "/api/v1/discounts/#{@disc.id}", headers: @headers
     end
 
     it 'returns HTTP status 200' do

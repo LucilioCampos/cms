@@ -5,9 +5,11 @@ describe Api::V1::DiscountsController, type: :request do
   context 'When update a discount' do
     
     before :all do
+      @user = create(:user)
+      @headers = authenticated_header(@user)
       @old = create(:discount)
       @new = build(:discount)
-      put "/api/v1/discounts/#{@old.id}", params: @new.attributes
+      put "/api/v1/discounts/#{@old.id}", params: @new.attributes, headers: @headers
     end
 
     it 'returns a HTTP status 202' do

@@ -93,9 +93,3 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
-
-
-def sign_in(user)
-  token = Knock::AuthToken.new(payload: { sub: user.id }).token
-  "Bearer #{token}"
-end

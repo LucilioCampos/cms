@@ -5,8 +5,10 @@ describe Api::V1::DocumentsController, type: :request do
   context 'When get a document without user or client' do
     
     before :all do
+      @user = create(:user)
+      @headers = authenticated_header(@user)
       @doc = create(:document)
-      get "/api/v1/documents/#{@doc.id}"
+      get "/api/v1/documents/#{@doc.id}", headers: @headers 
     end
 
     it 'returns a HTTP status 200' do

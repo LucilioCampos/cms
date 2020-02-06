@@ -1,12 +1,18 @@
 require 'rails_helper'
 
 describe Api::V1::DocumentsController, type: :request do
+  def authenticated_header(user)
+    token = Knock::AuthToken.new(payload: { sub: user.id }).token
+    { 'Authorization': "Bearer #{token}" }
+  end
   
   context 'When post a document without user and client' do
     
     before :all do
       @doc = build(:document)
-      post '/api/v1/documents', params: @doc.attributes
+      @user = create(:user)
+      @headers = authenticated_header(@user)
+      post '/api/v1/documents', params: @doc.attributes, headers: @headers
     end
 
     it 'returns a HTTP status 201' do
@@ -38,8 +44,10 @@ describe Api::V1::DocumentsController, type: :request do
   context 'When post a document with user' do
     
     before :all do
+      @users = create(:user)
+      @headers = authenticated_header(@users)
       @user = build(:document_user)
-      post '/api/v1/documents', params: @user.attributes
+      post '/api/v1/documents', params: @user.attributes, headers: @headers
     end
 
     it 'returns a HTTP status 200' do
@@ -63,8 +71,10 @@ describe Api::V1::DocumentsController, type: :request do
   context 'When post a document with client' do
     
     before :all do
+      @users = create(:user)
+      @headers = authenticated_header(@users)
       @client = build(:document_client)
-      post '/api/v1/documents', params: @client.attributes
+      post '/api/v1/documents', params: @client.attributes, headers: @headers
     end
 
     it 'returns a HTTP status 200' do

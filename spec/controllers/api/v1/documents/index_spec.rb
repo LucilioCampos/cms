@@ -5,10 +5,12 @@ describe Api::V1::DocumentsController, type: :request do
   context 'When GET documents' do
     
     before :all do
+      @user = create(:user)
+      @headers = authenticated_header(@user)
       create_list(:document, 10)
       create_list(:document_user, 10)
       create_list(:document_client, 10)
-      get '/api/v1/documents'
+      get '/api/v1/documents', headers: @headers 
     end
 
     it 'returns HTTP status 200' do

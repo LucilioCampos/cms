@@ -1,14 +1,21 @@
 require 'rails_helper'
 
+def authenticated_header(user)
+  token = Knock::AuthToken.new(payload: { sub: user.id }).token
+  { 'Authorization': "Bearer #{token}" }
+end
+
 describe Api::V1::ClientsController, type: :request do
 
   context 'PUT /api/v1/clients/:id' do
       
     before :all do
+      @user = create(:user)
+      @headers = authenticated_header(@user)
       @cliente = create(:client)
       @new_params = build(:client, status: :inactive)
       
-      put "/api/v1/clients/#{@cliente.id}", params: @new_params.attributes
+      put "/api/v1/clients/#{@cliente.id}", params: @new_params.attributes, headers: @headers
     end
 
     it 'returns HTTP success' do
