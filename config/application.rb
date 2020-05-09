@@ -24,7 +24,7 @@ module Cms
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'https://sales-cms-frontend.herokuapp.com', 'http://localhost:3001'
+        origins 'https://sales-cms-frontend.herokuapp.com', 'http://localhost:3001', 'https://newbesoft.web.app'
         resource '*', headers: :any, methods: [:get, :post, :options, :put, :delete]
       end
     end
