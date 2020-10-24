@@ -1,9 +1,5 @@
 require 'rails_helper'
 
-def authenticated_header(user)
-  token = Knock::AuthToken.new(payload: { sub: user.id }).token
-  { 'Authorization': "Bearer #{token}" }
-end
 
 describe Api::V1::AddressesController, type: :request do
   
@@ -12,12 +8,12 @@ describe Api::V1::AddressesController, type: :request do
     before :all do
       @add = build(:address)
       @user = create(:user, kind: :manager)
-      @headers = authenticated_header(@user)
+      @headers = authenticated_header
       post "/api/v1/addresses", headers: @headers, params: @add.attributes
     end
 
     it 'return HTTP status 201' do
-      puts authenticated_header(@user)
+      puts authenticated_header
       puts response.body
       expect(response).to have_http_status(201)
     end

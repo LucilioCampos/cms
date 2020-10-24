@@ -1,17 +1,12 @@
 require 'rails_helper'
 
-def authenticated_header(user)
-  token = Knock::AuthToken.new(payload: { sub: user.id }).token
-  { 'Authorization': "Bearer #{token}" }
-end
-
 describe 'Api::V1::DiscountsController', type: :request do
   
   context 'When create a discount' do
     
     before :all do
       @user = create(:user)
-      @headers = authenticated_header(@user)
+      @headers = authenticated_header
       @new = build(:discount)
       post '/api/v1/discounts', params: @new.attributes, headers: @headers
     end

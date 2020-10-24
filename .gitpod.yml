@@ -1,0 +1,9 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: bundle install
+
+  - command: rails db:migrate
+
+  - command: rails s

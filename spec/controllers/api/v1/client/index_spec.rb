@@ -1,17 +1,12 @@
 require 'rails_helper'
 
-def authenticated_header(user)
-  token = Knock::AuthToken.new(payload: { sub: user.id }).token
-  { 'Authorization': "Bearer #{token}" }
-end
-
 describe Api::V1::ClientsController, type: :request do
 
   context 'GET /clients', type: :request do
 
     before do
       @user = create(:user)
-      @headers = authenticated_header(@user)
+      @headers = authenticated_header
       create_list(:client, 10)
       get  '/api/v1/clients', headers: @headers
     end

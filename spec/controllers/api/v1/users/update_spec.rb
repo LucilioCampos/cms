@@ -5,9 +5,11 @@ describe Api::V1::UsersController, type: :request do
   context 'When updates a user' do
     
     before :all do
+    
       @old_user = create(:user)
       @new_user = build(:user)
-      put "/api/v1/users/#{@old_user.id}", params: @new_user.attributes
+
+      put "/api/v1/users/#{@old_user.id}", params: @new_user.attributes, headers: authenticated_header
     end
 
     it 'returns HTTP success' do
