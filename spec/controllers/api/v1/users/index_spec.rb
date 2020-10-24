@@ -9,8 +9,7 @@ describe 'UsersController', type: :request do
   context 'GET /users', type: :request do
 
     before do
-      create_list(:user, 10)
-      get @base_url
+      get @base_url, headers: authenticated_header
     end
 
     it 'returns HTTP success' do
@@ -18,7 +17,7 @@ describe 'UsersController', type: :request do
     end
 
     it 'returns a resource size' do
-      expect(JSON.parse(response.body).size).to be > 1
+      expect(JSON.parse(response.body).size).to eq 1
     end
 
     it 'returns a resource name' do
@@ -47,7 +46,7 @@ describe 'UsersController', type: :request do
 
     before do
       users = create(:user)
-      get "#{@base_url}/#{users.id}"
+      get "#{@base_url}/#{users.id}", headers: authenticated_header
     end
 
     it 'returns HTTP success' do
@@ -60,7 +59,7 @@ describe 'UsersController', type: :request do
 
     before :all do
       @users = create(:user)
-      get "#{@base_url}?search_name=#{@users.name}"
+      get "#{@base_url}?search_name=#{@users.name}", headers: authenticated_header
     end
 
     it 'returns HTTPS success' do

@@ -1,17 +1,13 @@
 require 'rails_helper'
 
 describe Api::V1::DocumentsController, type: :request do
-  def authenticated_header(user)
-    token = Knock::AuthToken.new(payload: { sub: user.id }).token
-    { 'Authorization': "Bearer #{token}" }
-  end
   
   context 'When post a document without user and client' do
     
     before :all do
       @doc = build(:document)
       @user = create(:user)
-      @headers = authenticated_header(@user)
+      @headers = authenticated_header
       post '/api/v1/documents', params: @doc.attributes, headers: @headers
     end
 
